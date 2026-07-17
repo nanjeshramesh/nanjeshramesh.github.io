@@ -95,6 +95,40 @@ a {
   padding: 6rem 1.5rem 4rem;
 }
 
+.hero-grid {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.hero-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-photo {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .hero-grid {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .hero-photo {
+    width: 96px;
+    height: 96px;
+  }
+}
+
 .eyebrow {
   color: var(--accent);
   font-weight: 600;
