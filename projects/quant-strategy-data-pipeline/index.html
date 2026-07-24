@@ -17,6 +17,8 @@
     --radius: 10px;
     --max-width: 760px;
     --success: #4caf7d;
+    --success-bg: rgba(76, 175, 125, 0.12);
+    --success-border: rgba(76, 175, 125, 0.35);
     --danger: #e06767;
     --danger-bg: rgba(224, 103, 103, 0.12);
     --danger-border: rgba(224, 103, 103, 0.35);
@@ -51,14 +53,19 @@
   .demo-title { font-size: 1rem; font-weight: 700; }
   .demo-note { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; }
 
-  .toggle { display: flex; gap: 0.35rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.3rem; }
-  .toggle button { border: none; background: transparent; color: var(--text-muted); font-size: 0.85rem; padding: 0.5rem 0.9rem; border-radius: 7px; cursor: pointer; font-family: inherit; font-weight: 600; }
+  .toggle { display: flex; flex-wrap: wrap; gap: 0.35rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.3rem; }
+  .toggle button { border: none; background: transparent; color: var(--text-muted); font-size: 0.85rem; padding: 0.5rem 0.9rem; border-radius: 7px; cursor: pointer; font-family: inherit; font-weight: 600; white-space: nowrap; }
   .toggle button.active { background: var(--accent-soft); color: var(--accent); }
 
   .alert { display: none; background: var(--danger-bg); border: 1px solid var(--danger-border); border-radius: var(--radius); padding: 0.9rem 1rem; font-size: 0.85rem; margin-bottom: 1.25rem; }
   .alert.show { display: block; }
   .alert strong { color: var(--danger); }
   .alert code { background: rgba(255,255,255,0.06); padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.8rem; }
+
+  .resolved-note { display: none; background: var(--success-bg); border: 1px solid var(--success-border); border-radius: var(--radius); padding: 0.9rem 1rem; font-size: 0.85rem; margin-bottom: 1.25rem; }
+  .resolved-note.show { display: block; }
+  .resolved-note strong { color: var(--success); }
+  .resolved-note code { background: rgba(255,255,255,0.06); padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.8rem; }
 
   .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem; }
   .kpi { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }
@@ -88,7 +95,7 @@
     <div class="breadcrumb"><a href="/">&larr; nanjeshramesh.github.io</a></div>
 
     <h1 class="page-title">Quant Strategy Data Pipeline</h1>
-    <p class="page-sub">Live demo, running on the actual sample data checked into the repo. Toggle between a healthy run and the reproducible schema-drift incident below.</p>
+    <p class="page-sub">Live demo, running on the actual sample data checked into the repo. Toggle between a healthy run, the schema-drift incident, and the verified fix below.</p>
 
     <div class="links">
       <a class="btn btn-primary" href="https://github.com/nanjeshramesh/quant-strategy-data-pipeline" target="_blank" rel="noopener">View source on GitHub ↗</a>
@@ -105,6 +112,7 @@
         <div class="toggle">
           <button id="btn-happy" class="active">Healthy run · Jul 23</button>
           <button id="btn-incident">Incident · Jul 24</button>
+          <button id="btn-fixed">Fixed · Jul 25</button>
         </div>
       </div>
 
@@ -112,6 +120,12 @@
         <strong>SLO breach.</strong> <code>strategy_b</code> is missing from <code>strategy_pnl</code> for 2026-07-24.
         Quarantine reason: missing expected column <code>ProfitLossUSD</code> — the source silently renamed it to <code>PnLUSD</code>.
         The other two strategies landed normally; see the runbook linked above for the full detection → fix timeline.
+      </div>
+
+      <div id="resolved-note" class="resolved-note">
+        <strong>Fix verified.</strong> <code>parse_strategy_b</code> now accepts either <code>ProfitLossUSD</code> or <code>PnLUSD</code>.
+        The source still hasn't reverted the rename as of 2026-07-25 — and the pipeline handles it cleanly.
+        Regression test: <code>test_previously_incident_causing_column_rename_now_handled</code>.
       </div>
 
       <div class="kpis">
@@ -144,7 +158,7 @@
 
     <p class="footer-note">
       Numbers above are pulled directly from <code>monitoring/reports/</code> and <code>data/lake/</code> in the repo —
-      run <code>make run DATE=2026-07-23</code> or <code>make incident DATE=2026-07-24</code> yourself to reproduce them.
+      run <code>make run DATE=2026-07-23</code>, <code>make incident DATE=2026-07-24</code>, or <code>make incident DATE=2026-07-25</code> yourself to reproduce them.
       Questions: <a href="mailto:nanjeshramesh7@gmail.com">nanjeshramesh7@gmail.com</a>
     </p>
   </div>
@@ -171,6 +185,16 @@
         { label: "row_counts", detail: "strategy_b: 0 rows (min expected: 10)", pass: false },
         { label: "null_rates", detail: "strategy_b: no data to check", pass: false },
         { label: "pnl_sanity", detail: "strategy_b: no data to check", pass: false }
+      ]
+    },
+    fixed: {
+      net: "$8.29M", gross: "$59.92M", landed: "3 / 3", status: "Healthy", statusClass: "success",
+      pnl: { strategy_a: -141440.07, strategy_b: -417053.51, strategy_c: 392166.04 },
+      checks: [
+        { label: "freshness", detail: "3/3 strategies landed for 2026-07-25 (strategy_b still renamed)", pass: true },
+        { label: "row_counts", detail: "all strategies ≥ 10 signal rows", pass: true },
+        { label: "null_rates", detail: "0% nulls across all strategies", pass: true },
+        { label: "pnl_sanity", detail: "gross exposure ≥ |net exposure| for all strategies", pass: true }
       ]
     }
   };
@@ -234,12 +258,15 @@
     renderChecks(d.checks);
 
     document.getElementById("alert").className = mode === "incident" ? "alert show" : "alert";
+    document.getElementById("resolved-note").className = mode === "fixed" ? "resolved-note show" : "resolved-note";
     document.getElementById("btn-happy").className = mode === "happy" ? "active" : "";
     document.getElementById("btn-incident").className = mode === "incident" ? "active" : "";
+    document.getElementById("btn-fixed").className = mode === "fixed" ? "active" : "";
   }
 
   document.getElementById("btn-happy").addEventListener("click", function () { render("happy"); });
   document.getElementById("btn-incident").addEventListener("click", function () { render("incident"); });
+  document.getElementById("btn-fixed").addEventListener("click", function () { render("fixed"); });
 
   render("happy");
 })();
