@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quant Strategy Data Pipeline — Live Demo | Nanjesh Ramesh</title>
+<meta name="description" content="Interactive demo of a strategy analytics pipeline: schema standardization, partitioned Parquet lake, data quality checks, and a reproducible schema-drift incident.">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-alt: #12151c;
+    --text: #e8eaed;
+    --text-muted: #9aa1ac;
+    --accent: #5b8cff;
+    --accent-soft: rgba(91, 140, 255, 0.12);
+    --border: #232732;
+    --radius: 10px;
+    --max-width: 760px;
+    --success: #4caf7d;
+    --success-bg: rgba(76, 175, 125, 0.12);
+    --success-border: rgba(76, 175, 125, 0.35);
+    --danger: #e06767;
+    --danger-bg: rgba(224, 103, 103, 0.12);
+    --danger-border: rgba(224, 103, 103, 0.35);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: var(--max-width); margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  .breadcrumb { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .breadcrumb a { color: var(--accent); }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .page-title { font-size: 1.7rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .page-sub { color: var(--text-muted); font-size: 0.95rem; max-width: 600px; margin-bottom: 1.5rem; }
+
+  .links { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .btn { padding: 0.55rem 1.1rem; border-radius: var(--radius); font-weight: 600; font-size: 0.85rem; border: 1px solid var(--border); display: inline-block; transition: border-color 0.15s ease, transform 0.15s ease; }
+  .btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .btn-primary { background: var(--accent); color: #0b0d12; border-color: transparent; }
+  .btn-primary:hover { background: #7aa2ff; }
+
+  .card { background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; }
+
+  .demo-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .demo-title { font-size: 1rem; font-weight: 700; }
+  .demo-note { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+  .toggle { display: flex; flex-wrap: wrap; gap: 0.35rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.3rem; }
+  .toggle button { border: none; background: transparent; color: var(--text-muted); font-size: 0.85rem; padding: 0.5rem 0.9rem; border-radius: 7px; cursor: pointer; font-family: inherit; font-weight: 600; white-space: nowrap; }
+  .toggle button.active { background: var(--accent-soft); color: var(--accent); }
+
+  .alert { display: none; background: var(--danger-bg); border: 1px solid var(--danger-border); border-radius: var(--radius); padding: 0.9rem 1rem; font-size: 0.85rem; margin-bottom: 1.25rem; }
+  .alert.show { display: block; }
+  .alert strong { color: var(--danger); }
+  .alert code { background: rgba(255,255,255,0.06); padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.8rem; }
+
+  .resolved-note { display: none; background: var(--success-bg); border: 1px solid var(--success-border); border-radius: var(--radius); padding: 0.9rem 1rem; font-size: 0.85rem; margin-bottom: 1.25rem; }
+  .resolved-note.show { display: block; }
+  .resolved-note strong { color: var(--success); }
+  .resolved-note code { background: rgba(255,255,255,0.06); padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.8rem; }
+
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem; }
+  .kpi { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }
+  .kpi-label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.4rem; }
+  .kpi-value { font-size: 1.3rem; font-weight: 700; }
+  .kpi-value.success { color: var(--success); }
+  .kpi-value.danger { color: var(--danger); }
+
+  .section-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.6rem; }
+  .chart-wrap { position: relative; height: 220px; margin-bottom: 1.5rem; }
+
+  .checks { display: flex; flex-direction: column; gap: 0.5rem; }
+  .check { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; padding: 0.6rem 0.85rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); }
+  .check .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .check .dot.pass { background: var(--success); }
+  .check .dot.fail { background: var(--danger); }
+  .check .label { font-weight: 600; min-width: 100px; }
+  .check .detail { color: var(--text-muted); }
+
+  .footer-note { color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 2rem; }
+  .footer-note a { color: var(--accent); }
+  .footer-note a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">&larr; nanjeshramesh.github.io</a></div>
+
+    <h1 class="page-title">Quant Strategy Data Pipeline</h1>
+    <p class="page-sub">Live demo, running on the actual sample data checked into the repo. Toggle between a healthy run, the schema-drift incident, and the verified fix below.</p>
+
+    <div class="links">
+      <a class="btn btn-primary" href="https://github.com/nanjeshramesh/quant-strategy-data-pipeline" target="_blank" rel="noopener">View source on GitHub ↗</a>
+      <a class="btn" href="https://github.com/nanjeshramesh/quant-strategy-data-pipeline/blob/main/runbooks/schema_drift_incident.md" target="_blank" rel="noopener">Read the incident runbook ↗</a>
+      <a class="btn" href="/#projects">Back to projects</a>
+    </div>
+
+    <div class="card">
+      <div class="demo-header">
+        <div>
+          <div class="demo-title">Pipeline output</div>
+          <div class="demo-note">Sample output from the checked-in demo dates — nothing is fetched live, this is the actual result of running the pipeline.</div>
+        </div>
+        <div class="toggle">
+          <button id="btn-happy" class="active">Healthy run</button>
+          <button id="btn-incident">Incident</button>
+          <button id="btn-fixed">Fixed</button>
+        </div>
+      </div>
+
+      <div id="alert" class="alert">
+        <strong>SLO breach.</strong> <code>strategy_b</code> is missing from <code>strategy_pnl</code> for 2026-07-24.
+        Quarantine reason: missing expected column <code>ProfitLossUSD</code> — the source silently renamed it to <code>PnLUSD</code>.
+        The other two strategies landed normally; see the runbook linked above for the full detection → fix timeline.
+      </div>
+
+      <div id="resolved-note" class="resolved-note">
+        <strong>Fix verified.</strong> <code>parse_strategy_b</code> now accepts either <code>ProfitLossUSD</code> or <code>PnLUSD</code>.
+        The source still hasn't reverted the rename as of 2026-07-25 — and the pipeline handles it cleanly.
+        Regression test: <code>test_previously_incident_causing_column_rename_now_handled</code>.
+      </div>
+
+      <div class="kpis">
+        <div class="kpi">
+          <div class="kpi-label">Firm net exposure</div>
+          <div class="kpi-value" id="kpi-net">−$3.87M</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Firm gross exposure</div>
+          <div class="kpi-value" id="kpi-gross">$64.91M</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Strategies landed</div>
+          <div class="kpi-value success" id="kpi-landed">3 / 3</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Pipeline status</div>
+          <div class="kpi-value success" id="kpi-status">Healthy</div>
+        </div>
+      </div>
+
+      <div class="section-label">PnL by strategy (USD)</div>
+      <div class="chart-wrap">
+        <canvas id="chart" role="img" aria-label="Bar chart of PnL in USD for strategy_a, strategy_b, and strategy_c">Chart showing PnL by strategy; strategy_b is missing on the incident date because it was quarantined.</canvas>
+      </div>
+
+      <div class="section-label">Quality checks</div>
+      <div class="checks" id="checks"></div>
+    </div>
+
+    <p class="footer-note">
+      Numbers above are pulled directly from <code>monitoring/reports/</code> and <code>data/lake/</code> in the repo —
+      run <code>make run DATE=2026-07-23</code>, <code>make incident DATE=2026-07-24</code>, or <code>make incident DATE=2026-07-25</code> yourself to reproduce them.
+      Questions: <a href="mailto:nanjeshramesh7@gmail.com">nanjeshramesh7@gmail.com</a>
+    </p>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function () {
+  var DATA = {
+    happy: {
+      net: "−$3.87M", gross: "$64.91M", landed: "3 / 3", status: "Healthy", statusClass: "success",
+      pnl: { strategy_a: 360763.59, strategy_b: -26837.14, strategy_c: 308873.37 },
+      checks: [
+        { label: "freshness", detail: "3/3 strategies landed for 2026-07-23", pass: true },
+        { label: "row_counts", detail: "all strategies ≥ 10 signal rows", pass: true },
+        { label: "null_rates", detail: "0% nulls across all strategies", pass: true },
+        { label: "pnl_sanity", detail: "gross exposure ≥ |net exposure| for all strategies", pass: true }
+      ]
+    },
+    incident: {
+      net: "−$6.23M", gross: "$38.91M", landed: "2 / 3", status: "Alert", statusClass: "danger",
+      pnl: { strategy_a: -390339.48, strategy_b: null, strategy_c: 438131.21 },
+      checks: [
+        { label: "freshness", detail: "strategy_b missing for 2026-07-24", pass: false },
+        { label: "row_counts", detail: "strategy_b: 0 rows (min expected: 10)", pass: false },
+        { label: "null_rates", detail: "strategy_b: no data to check", pass: false },
+        { label: "pnl_sanity", detail: "strategy_b: no data to check", pass: false }
+      ]
+    },
+    fixed: {
+      net: "$8.29M", gross: "$59.92M", landed: "3 / 3", status: "Healthy", statusClass: "success",
+      pnl: { strategy_a: -141440.07, strategy_b: -417053.51, strategy_c: 392166.04 },
+      checks: [
+        { label: "freshness", detail: "3/3 strategies landed for 2026-07-25 (strategy_b still renamed)", pass: true },
+        { label: "row_counts", detail: "all strategies ≥ 10 signal rows", pass: true },
+        { label: "null_rates", detail: "0% nulls across all strategies", pass: true },
+        { label: "pnl_sanity", detail: "gross exposure ≥ |net exposure| for all strategies", pass: true }
+      ]
+    }
+  };
+
+  var ctx = document.getElementById("chart").getContext("2d");
+  var chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["strategy_a", "strategy_b", "strategy_c"],
+      datasets: [{
+        data: [DATA.happy.pnl.strategy_a, DATA.happy.pnl.strategy_b, DATA.happy.pnl.strategy_c],
+        backgroundColor: ["#5b8cff", "#5b8cff", "#5b8cff"],
+        borderRadius: 4,
+        maxBarThickness: 28
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: function (c) { return c.raw == null ? "no data (quarantined)" : "$" + c.raw.toLocaleString(undefined, {maximumFractionDigits: 0}); } } }
+      },
+      scales: {
+        y: { ticks: { color: "#9aa1ac", callback: function (v) { return "$" + (v / 1000).toFixed(0) + "k"; } }, grid: { color: "rgba(255,255,255,0.06)" } },
+        x: { ticks: { color: "#9aa1ac" }, grid: { display: false } }
+      }
+    }
+  });
+
+  function renderChecks(checks) {
+    var el = document.getElementById("checks");
+    el.innerHTML = "";
+    checks.forEach(function (c) {
+      var row = document.createElement("div");
+      row.className = "check";
+      row.innerHTML = '<span class="dot ' + (c.pass ? "pass" : "fail") + '"></span>' +
+        '<span class="label">' + c.label + "</span>" +
+        '<span class="detail">' + c.detail + "</span>";
+      el.appendChild(row);
+    });
+  }
+
+  function render(mode) {
+    var d = DATA[mode];
+    document.getElementById("kpi-net").textContent = d.net;
+    document.getElementById("kpi-gross").textContent = d.gross;
+    document.getElementById("kpi-landed").textContent = d.landed;
+    var statusEl = document.getElementById("kpi-status");
+    statusEl.textContent = d.status;
+    statusEl.className = "kpi-value " + d.statusClass;
+
+    chart.data.datasets[0].data = [d.pnl.strategy_a, d.pnl.strategy_b, d.pnl.strategy_c];
+    chart.data.datasets[0].backgroundColor = [
+      d.pnl.strategy_a == null ? "#e06767" : "#5b8cff",
+      d.pnl.strategy_b == null ? "#e06767" : "#5b8cff",
+      d.pnl.strategy_c == null ? "#e06767" : "#5b8cff"
+    ];
+    chart.update();
+
+    renderChecks(d.checks);
+
+    document.getElementById("alert").className = mode === "incident" ? "alert show" : "alert";
+    document.getElementById("resolved-note").className = mode === "fixed" ? "resolved-note show" : "resolved-note";
+    document.getElementById("btn-happy").className = mode === "happy" ? "active" : "";
+    document.getElementById("btn-incident").className = mode === "incident" ? "active" : "";
+    document.getElementById("btn-fixed").className = mode === "fixed" ? "active" : "";
+  }
+
+  document.getElementById("btn-happy").addEventListener("click", function () { render("happy"); });
+  document.getElementById("btn-incident").addEventListener("click", function () { render("incident"); });
+  document.getElementById("btn-fixed").addEventListener("click", function () { render("fixed"); });
+
+  render("happy");
+})();
+</script>
+</body>
+</html>

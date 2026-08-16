@@ -160,7 +160,55 @@
 
     <section id="projects" class="section">
       <h2 class="section-title">Projects</h2>
-      <p class="section-subtitle">Sanitized case studies based on professional work — details generalized to protect confidential information.</p>
+      <p class="section-subtitle">A mix of open-source projects and sanitized case studies based on professional work — professional case studies are generalized to protect confidential information.</p>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3 class="project-title">Quant Strategy Data Pipeline</h3>
+          <a href="/projects/quant-strategy-data-pipeline/" class="project-link">Live demo ↗</a> <a href="https://github.com/nanjeshramesh/quant-strategy-data-pipeline" target="_blank" rel="noopener" class="project-link">Source ↗</a>
+        </div>
+        <svg viewBox="0 0 630 100" class="arch-diagram" role="img" aria-label="Architecture: Fragmented Sources to Standardize and Schema Contracts to Partitioned Lake to Quality Checks and Alerts">
+          <defs>
+            <marker id="arrow0" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="var(--accent)"/>
+            </marker>
+          </defs>
+          <g font-family="inherit" font-size="12" fill="var(--text)">
+            <rect x="10" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
+            <text x="75" y="46" text-anchor="middle">Fragmented</text>
+            <text x="75" y="62" text-anchor="middle">Sources</text>
+
+            <line x1="140" y1="50" x2="168" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow0)"/>
+
+            <rect x="170" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
+            <text x="235" y="46" text-anchor="middle">Standardize /</text>
+            <text x="235" y="62" text-anchor="middle">Schema Contracts</text>
+
+            <line x1="300" y1="50" x2="328" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow0)"/>
+
+            <rect x="330" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
+            <text x="395" y="46" text-anchor="middle">Partitioned</text>
+            <text x="395" y="62" text-anchor="middle">Parquet Lake</text>
+
+            <line x1="460" y1="50" x2="488" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow0)"/>
+
+            <rect x="490" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
+            <text x="555" y="46" text-anchor="middle">Quality Checks /</text>
+            <text x="555" y="62" text-anchor="middle">Alerts</text>
+          </g>
+        </svg>
+        <div class="project-body">
+          <p><strong>Problem:</strong> Each strategy team publishes analytics output in its own inconsistent format, making it hard to build one reliable, queryable dataset.</p>
+          <p><strong>Solution:</strong> Built a standardization pipeline with enforced schema contracts (pandera), partitioned Parquet storage, SLO-style quality checks, and a documented incident runbook — plus an Airflow DAG showing how it would run in production.</p>
+          <ul class="job-list">
+            <li>Three inconsistent source formats unified into one schema-contracted table</li>
+            <li>Partition-pruned queries via DuckDB, standing in for Presto/Spark</li>
+            <li>Reproducible schema-drift incident with a full runbook and postmortem</li>
+            <li>Full pytest suite covering schema contracts and the incident path</li>
+          </ul>
+        </div>
+      </div>
+
 
       <div class="project-card">
         <h3 class="project-title">Real-Time Incentive Data Platform</h3>
