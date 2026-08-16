@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nanjesh Ramesh — Senior Data Engineer | Backend &amp; Distributed Systems</title>
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
   <header class="nav">
@@ -15,6 +15,7 @@
         <a href="#impact" data-nav="impact">Impact</a>
         <a href="#experience" data-nav="experience">Experience</a>
         <a href="#projects" data-nav="projects">Projects</a>
+        <a href="#opensource" data-nav="opensource">Open Source</a>
         <a href="#skills" data-nav="skills">Skills</a>
         <a href="#contact" data-nav="contact">Contact</a>
       </nav>
@@ -291,6 +292,37 @@
             <li>Improved downstream API availability</li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <section id="opensource" class="section">
+      <h2 class="section-title">Open Source Contributions</h2>
+      <div class="oss-card">
+        <div class="oss-header">
+          <h3 class="oss-title">apache/airflow</h3>
+          <span class="oss-status oss-status--open">Open</span>
+        </div>
+        <p class="oss-pr-title">Fix DateTimeSensorAsync crash on templated target_time with start_from_trigger</p>
+        <p class="oss-desc">
+          Diagnosed and fixed a bug where a Jinja-templated <code>target_time</code> was being
+          parsed as a datetime at DAG-parse time, before template rendering happened — crashing
+          the entire DAG file instead of just the affected task.
+        </p>
+        <a href="https://github.com/apache/airflow/pull/70576" target="_blank" rel="noopener" class="oss-link">View PR #70576 →</a>
+      </div>
+
+      <div class="oss-card">
+        <div class="oss-header">
+          <h3 class="oss-title">fivetran/great_expectations</h3>
+          <span class="oss-status oss-status--merged">Merged</span>
+        </div>
+        <p class="oss-pr-title">Promote ExpectColumnValuesToMatchStrftimeFormat to supported-core</p>
+        <p class="oss-desc">
+          Brought an existing expectation up to the project's supported-core bar: added Gallery
+          documentation, generated schema and backend support metadata, and fixed a docstring
+          interpolation bug.
+        </p>
+        <a href="https://github.com/fivetran/great_expectations/pull/12009" target="_blank" rel="noopener" class="oss-link">View PR #12009 →</a>
       </div>
     </section>
 
