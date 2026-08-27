@@ -347,6 +347,35 @@
       <h2 class="section-title">Open Source Contributions</h2>
       <div class="oss-card">
         <div class="oss-header">
+          <h3 class="oss-title">fivetran/great_expectations</h3>
+          <span class="oss-status oss-status--merged">Merged</span>
+        </div>
+        <p class="oss-pr-title">Promote ExpectColumnValuesToMatchStrftimeFormat to supported-core</p>
+        <p class="oss-desc">
+          Brought an existing expectation up to the project's supported-core bar: added Gallery
+          documentation, generated schema and backend support metadata, and fixed a docstring
+          interpolation bug.
+        </p>
+        <a href="https://github.com/fivetran/great_expectations/pull/12009" target="_blank" rel="noopener" class="oss-link">View PR #12009 →</a>
+      </div>
+
+      <div class="oss-card">
+        <div class="oss-header">
+          <h3 class="oss-title">fivetran/great_expectations</h3>
+          <span class="oss-status oss-status--open">Open</span>
+        </div>
+        <p class="oss-pr-title">Pass usedforsecurity=False on non-security md5 calls for FIPS hosts</p>
+        <p class="oss-desc">
+          Fixed a FIPS-compliance crash caused by unflagged MD5 usage across id generation,
+          batch fingerprinting, and hash-based partitioning/sampling — adding
+          <code>usedforsecurity=False</code> at every non-security call site without changing a
+          single existing digest.
+        </p>
+        <a href="https://github.com/fivetran/great_expectations/pull/12099" target="_blank" rel="noopener" class="oss-link">View PR #12099 →</a>
+      </div>
+
+      <div class="oss-card">
+        <div class="oss-header">
           <h3 class="oss-title">apache/airflow</h3>
           <span class="oss-status oss-status--open">Open</span>
         </div>
@@ -361,16 +390,60 @@
 
       <div class="oss-card">
         <div class="oss-header">
-          <h3 class="oss-title">fivetran/great_expectations</h3>
-          <span class="oss-status oss-status--merged">Merged</span>
+          <h3 class="oss-title">dlt-hub/dlt</h3>
+          <span class="oss-status oss-status--open">Open</span>
         </div>
-        <p class="oss-pr-title">Promote ExpectColumnValuesToMatchStrftimeFormat to supported-core</p>
+        <p class="oss-pr-title">Resolve GCP credentials from a file path, aggregate union parse errors</p>
         <p class="oss-desc">
-          Brought an existing expectation up to the project's supported-core bar: added Gallery
-          documentation, generated schema and backend support metadata, and fixed a docstring
-          interpolation bug.
+          Diagnosed a credential-resolution bug where a valid GCP service account file path was
+          rejected as invalid JSON, causing dlt to silently fall through to OAuth and surface a
+          misleading error. Added file-path support and improved the union-resolution error
+          message so failures explain what was actually tried.
         </p>
-        <a href="https://github.com/fivetran/great_expectations/pull/12009" target="_blank" rel="noopener" class="oss-link">View PR #12009 →</a>
+        <a href="https://github.com/dlt-hub/dlt/pull/4375" target="_blank" rel="noopener" class="oss-link">View PR #4375 →</a>
+      </div>
+
+      <div class="oss-card">
+        <div class="oss-header">
+          <h3 class="oss-title">dlt-hub/dlt</h3>
+          <span class="oss-status oss-status--open">Open</span>
+        </div>
+        <p class="oss-pr-title">Move flake8 config from tox.ini to pyproject.toml</p>
+        <p class="oss-desc">
+          Migrated the project's flake8 configuration into <code>pyproject.toml</code>, adding the
+          Flake8-pyproject plugin and verifying byte-identical lint behavior across the full
+          codebase before and after the change.
+        </p>
+        <a href="https://github.com/dlt-hub/dlt/pull/4386" target="_blank" rel="noopener" class="oss-link">View PR #4386 →</a>
+      </div>
+
+      <div class="oss-card">
+        <div class="oss-header">
+          <h3 class="oss-title">langchain-ai/langsmith-sdk</h3>
+          <span class="oss-status oss-status--open">Open</span>
+        </div>
+        <p class="oss-pr-title">Add regression test for feedback_config dict handling</p>
+        <p class="oss-desc">
+          Investigated a reported Pydantic union-coercion bug where arbitrary dict values passed
+          to <code>EvaluationResult.feedback_config</code> were silently dropped. Traced the fix to
+          an upstream <code>pydantic-core</code> release and added a regression test to guard
+          against it recurring.
+        </p>
+        <a href="https://github.com/langchain-ai/langsmith-sdk/pull/3439" target="_blank" rel="noopener" class="oss-link">View PR #3439 →</a>
+      </div>
+
+      <div class="oss-card">
+        <div class="oss-header">
+          <h3 class="oss-title">MrPowers/chispa</h3>
+          <span class="oss-status oss-status--open">Open</span>
+        </div>
+        <p class="oss-pr-title">Add full_log option to suppress the diff table in equality errors</p>
+        <p class="oss-desc">
+          Added an opt-in <code>full_log</code> parameter to suppress the full row-by-row diff
+          table in DataFrame equality failures, useful when comparing large DataFrames whose diffs
+          would otherwise flood test output.
+        </p>
+        <a href="https://github.com/MrPowers/chispa/pull/195" target="_blank" rel="noopener" class="oss-link">View PR #195 →</a>
       </div>
     </section>
 
