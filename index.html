@@ -449,7 +449,7 @@
       <div class="oss-card">
         <div class="oss-header">
           <h3 class="oss-title">meltano/meltano</h3>
-          <span class="oss-status oss-status--open">Open</span>
+          <span class="oss-status oss-status--merged">Merged</span>
         </div>
         <p class="oss-pr-title">Support .python-version file for plugin installs</p>
         <p class="oss-desc">
@@ -459,6 +459,22 @@
           setting.
         </p>
         <a href="https://github.com/meltano/meltano/pull/10283" target="_blank" rel="noopener" class="oss-link">View PR #10283 →</a>
+      </div>
+
+      <div class="oss-card">
+        <div class="oss-header">
+          <h3 class="oss-title">trinodb/trino</h3>
+          <span class="oss-status oss-status--open">Open</span>
+        </div>
+        <p class="oss-pr-title">Classify Iceberg commit conflicts as TRANSACTION_CONFLICT</p>
+        <p class="oss-desc">
+          Traced Iceberg transaction commits through the connector's call graph and classified
+          optimistic-concurrency conflicts with the same <code>TRANSACTION_CONFLICT</code> error
+          code the Hive connector already uses, closing two call sites that had no exception
+          handling at all and guarding against the new classification being silently re-wrapped
+          by an existing broad catch block.
+        </p>
+        <a href="https://github.com/trinodb/trino/pull/30925" target="_blank" rel="noopener" class="oss-link">View PR #30925 →</a>
       </div>
     </section>
 
