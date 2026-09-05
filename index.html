@@ -348,7 +348,7 @@
 
     <section id="opensource" class="section">
       <h2 class="section-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>Open Source Contributions</h2>
-      <p class="section-subtitle">Highlights below — the full list of 13 PRs (4 merged, 9 open) follows.</p>
+      <p class="section-subtitle">Highlights below — the full list of 14 PRs (4 merged, 10 open) follows.</p>
 
       <div class="oss-card reveal">
         <div class="oss-header">
@@ -393,6 +393,24 @@
           the entire DAG file instead of just the affected task.
         </p>
         <a href="https://github.com/apache/airflow/pull/70576" target="_blank" rel="noopener" class="oss-link">View PR #70576 →</a>
+      </div>
+
+      <div class="oss-card reveal">
+        <div class="oss-header">
+          <h3 class="oss-title">trinodb/trino</h3>
+          <span class="oss-status oss-status--open">Open</span>
+        </div>
+        <p class="oss-pr-title">Fix TRIM/RTRIM on CHAR stripping real trailing spaces, not just padding</p>
+        <p class="oss-desc">
+          Traced a SQL correctness bug back through eight years of git history to a leftover
+          <code>trimTrailingSpaces()</code> call that outlived the storage invariant it was
+          originally written to satisfy, silently stripping real trailing content from
+          <code>TRIM</code>/<code>RTRIM</code> results on <code>CHAR</code> values. Fixed by
+          padding to the declared length before trimming, matching an existing pattern
+          elsewhere in the same file, and corrected six existing unit test assertions that
+          had been encoding the bug as expected behavior.
+        </p>
+        <a href="https://github.com/trinodb/trino/pull/31012" target="_blank" rel="noopener" class="oss-link">View PR #31012 →</a>
       </div>
 
       <div class="oss-compact-list">
