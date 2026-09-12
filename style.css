@@ -575,6 +575,25 @@ a {
   color: var(--text);
 }
 
+.oss-view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  padding: 0.65rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.oss-view-all:hover {
+  border-color: var(--accent);
+  transform: translateX(2px);
+}
+
 /* Skills */
 .skill-group {
   margin-bottom: 1.75rem;
