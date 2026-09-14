@@ -228,51 +228,69 @@
 
       <div class="project-card reveal">
         <h3 class="project-title">Enterprise Data &amp; Measurement Platform</h3>
-        <svg viewBox="0 0 680 100" class="arch-diagram" role="img" aria-label="Architecture: Fragmented Sources to Real-Time Ingestion to Spark Processing and Validation to Curated Models to Publishing APIs and Dashboards">
+        <svg viewBox="0 0 840 200" class="arch-diagram" role="img" aria-label="Architecture: Fragmented Sources split into a real-time path (Kinesis/Lambda, Spark Streaming) and a batch path (scheduled ingest, Spark Batch ETL), both converging into Redshift Curated Models and then Publishing APIs and Dashboards">
           <defs>
             <marker id="arrow-main" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
               <path d="M0,0 L8,4 L0,8 Z" fill="var(--accent)"/>
             </marker>
+            <marker id="arrow-batch" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#ff9900"/>
+            </marker>
           </defs>
           <g font-family="inherit" font-size="11.5" fill="var(--text)">
-            <rect x="10" y="20" width="110" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="65" y="46" text-anchor="middle">Fragmented</text>
-            <text x="65" y="62" text-anchor="middle">Sources</text>
+            <text x="325" y="11" text-anchor="middle" font-size="9.5" font-weight="700" letter-spacing="0.04em" fill="var(--accent)">REAL-TIME</text>
+            <text x="325" y="196" text-anchor="middle" font-size="9.5" font-weight="700" letter-spacing="0.04em" fill="#ff9900">BATCH</text>
 
-            <line x1="120" y1="50" x2="143" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-main)"/>
+            <rect x="10" y="67" width="110" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
+            <text x="65" y="93" text-anchor="middle">Fragmented</text>
+            <text x="65" y="109" text-anchor="middle">Sources</text>
 
-            <rect x="145" y="20" width="110" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="200" y="46" text-anchor="middle">Kinesis /</text>
-            <text x="200" y="62" text-anchor="middle">Lambda Ingest</text>
+            <line x1="120" y1="90" x2="163" y2="52" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-main)"/>
+            <line x1="120" y1="104" x2="163" y2="142" stroke="#ff9900" stroke-width="2" marker-end="url(#arrow-batch)"/>
 
-            <line x1="255" y1="50" x2="278" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-main)"/>
+            <rect x="170" y="20" width="140" height="55" rx="8" fill="var(--bg-alt)" stroke="var(--accent)"/>
+            <text x="240" y="44" text-anchor="middle">Kinesis /</text>
+            <text x="240" y="60" text-anchor="middle">Lambda Ingest</text>
 
-            <rect x="280" y="20" width="110" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="335" y="46" text-anchor="middle">Spark Processing</text>
-            <text x="335" y="62" text-anchor="middle">&amp; Validation</text>
+            <rect x="170" y="120" width="140" height="55" rx="8" fill="var(--bg-alt)" stroke="#ff9900"/>
+            <text x="240" y="144" text-anchor="middle">Scheduled</text>
+            <text x="240" y="160" text-anchor="middle">Batch Ingest</text>
 
-            <line x1="390" y1="50" x2="413" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-main)"/>
+            <line x1="310" y1="47.5" x2="343" y2="47.5" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-main)"/>
+            <line x1="310" y1="147.5" x2="343" y2="147.5" stroke="#ff9900" stroke-width="2" marker-end="url(#arrow-batch)"/>
 
-            <rect x="415" y="20" width="110" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="470" y="46" text-anchor="middle">Redshift</text>
-            <text x="470" y="62" text-anchor="middle">Curated Models</text>
+            <rect x="350" y="20" width="120" height="55" rx="8" fill="var(--bg-alt)" stroke="var(--accent)"/>
+            <text x="410" y="44" text-anchor="middle">Spark</text>
+            <text x="410" y="60" text-anchor="middle">Streaming</text>
 
-            <line x1="525" y1="50" x2="548" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-main)"/>
+            <rect x="350" y="120" width="120" height="55" rx="8" fill="var(--bg-alt)" stroke="#ff9900"/>
+            <text x="410" y="144" text-anchor="middle">Spark</text>
+            <text x="410" y="160" text-anchor="middle">Batch ETL</text>
 
-            <rect x="550" y="20" width="120" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="610" y="46" text-anchor="middle">Publishing APIs /</text>
-            <text x="610" y="62" text-anchor="middle">Dashboards</text>
+            <line x1="470" y1="47.5" x2="503" y2="85" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-main)"/>
+            <line x1="470" y1="147.5" x2="503" y2="109" stroke="#ff9900" stroke-width="2" marker-end="url(#arrow-batch)"/>
+
+            <rect x="510" y="67" width="140" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
+            <text x="580" y="93" text-anchor="middle">Redshift</text>
+            <text x="580" y="109" text-anchor="middle">Curated Models</text>
+
+            <line x1="650" y1="97" x2="683" y2="97" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-main)"/>
+
+            <rect x="690" y="67" width="140" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
+            <text x="760" y="93" text-anchor="middle">Publishing APIs /</text>
+            <text x="760" y="109" text-anchor="middle">Dashboards</text>
           </g>
         </svg>
         <div class="project-body">
-          <p><strong>Problem:</strong> Financial and operational data was fragmented across systems, slow to report on (up to 24 hours behind), and lacked the validation needed for reliable, real-time decision-making.</p>
-          <p><strong>Solution:</strong> Built an end-to-end AWS data platform spanning real-time ingestion, Spark-based processing and validation, curated data modeling, and standardized publishing APIs, delivering trusted data to dashboards and downstream consumers.</p>
+          <p><strong>Problem:</strong> Finance, investment, and partner teams needed fast, trustworthy visibility into large-scale operational data, but source systems were fragmented, reporting lagged up to 24 hours behind, and inconsistent validation put stakeholder trust in the numbers at risk.</p>
+          <p><strong>Solution:</strong> Built an end-to-end AWS data platform with parallel batch and real-time processing paths — Kinesis/Lambda for streaming, scheduled ingestion for batch — converging through Spark into curated Redshift models, then served through standardized publishing APIs to dashboards and downstream consumers.</p>
+          <p><strong>Impact:</strong></p>
           <ul class="job-list">
-            <li>Reduced reporting latency from 24 hours to realtime across hundreds of incentive programs</li>
-            <li>Enabled reporting and analytics across tens of thousands of business opportunities, representing $100B+ in tracked value</li>
-            <li>Delivered six mission-critical finance datasets (contracts, invoices, payments, and more) ahead of schedule with zero production issues</li>
-            <li>Reduced production and audit issues through validation, observability, and standardized schema contracts</li>
-            <li>Improved reliability of downstream reporting and API availability</li>
+            <li>Gave finance and leadership teams real-time visibility into hundreds of incentive programs, replacing a 24-hour reporting lag</li>
+            <li>Enabled confident, data-driven investment decisions across tens of thousands of business opportunities, representing $100B+ in tracked value</li>
+            <li>Delivered six mission-critical finance datasets (contracts, invoices, payments, and more) ahead of schedule with zero production issues, unblocking downstream teams early</li>
+            <li>Increased stakeholder trust in reported numbers by cutting production and audit issues through validation and standardized schema contracts</li>
+            <li>Improved the reliability of systems finance and partner teams rely on daily, reducing downstream reporting failures</li>
           </ul>
         </div>
       </div>
