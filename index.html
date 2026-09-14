@@ -227,133 +227,52 @@
 
 
       <div class="project-card reveal">
-        <h3 class="project-title">Real-Time Incentive Data Platform</h3>
-        <svg viewBox="0 0 630 100" class="arch-diagram" role="img" aria-label="Architecture: Event Sources to Ingestion to Processing to Storage and Dashboards">
+        <h3 class="project-title">Enterprise Data &amp; Measurement Platform</h3>
+        <svg viewBox="0 0 680 100" class="arch-diagram" role="img" aria-label="Architecture: Fragmented Sources to Real-Time Ingestion to Spark Processing and Validation to Curated Models to Publishing APIs and Dashboards">
           <defs>
-            <marker id="arrow1" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+            <marker id="arrow-main" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
               <path d="M0,0 L8,4 L0,8 Z" fill="var(--accent)"/>
             </marker>
           </defs>
-          <g font-family="inherit" font-size="12" fill="var(--text)">
-            <rect x="10" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="75" y="46" text-anchor="middle">Event</text>
-            <text x="75" y="62" text-anchor="middle">Sources</text>
+          <g font-family="inherit" font-size="11.5" fill="var(--text)">
+            <rect x="10" y="20" width="110" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
+            <text x="65" y="46" text-anchor="middle">Fragmented</text>
+            <text x="65" y="62" text-anchor="middle">Sources</text>
 
-            <line x1="140" y1="50" x2="168" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow1)"/>
+            <line x1="120" y1="50" x2="143" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-main)"/>
 
-            <rect x="170" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="235" y="46" text-anchor="middle">Kinesis /</text>
-            <text x="235" y="62" text-anchor="middle">Lambda Ingest</text>
+            <rect x="145" y="20" width="110" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
+            <text x="200" y="46" text-anchor="middle">Kinesis /</text>
+            <text x="200" y="62" text-anchor="middle">Lambda Ingest</text>
 
-            <line x1="300" y1="50" x2="328" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow1)"/>
+            <line x1="255" y1="50" x2="278" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-main)"/>
 
-            <rect x="330" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="395" y="46" text-anchor="middle">Spark</text>
-            <text x="395" y="62" text-anchor="middle">ETL</text>
+            <rect x="280" y="20" width="110" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
+            <text x="335" y="46" text-anchor="middle">Spark Processing</text>
+            <text x="335" y="62" text-anchor="middle">&amp; Validation</text>
 
-            <line x1="460" y1="50" x2="488" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow1)"/>
+            <line x1="390" y1="50" x2="413" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-main)"/>
 
-            <rect x="490" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="555" y="46" text-anchor="middle">Redshift /</text>
-            <text x="555" y="62" text-anchor="middle">Dashboards</text>
+            <rect x="415" y="20" width="110" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
+            <text x="470" y="46" text-anchor="middle">Redshift</text>
+            <text x="470" y="62" text-anchor="middle">Curated Models</text>
+
+            <line x1="525" y1="50" x2="548" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-main)"/>
+
+            <rect x="550" y="20" width="120" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
+            <text x="610" y="46" text-anchor="middle">Publishing APIs /</text>
+            <text x="610" y="62" text-anchor="middle">Dashboards</text>
           </g>
         </svg>
         <div class="project-body">
-          <p><strong>Problem:</strong> Reporting latency was too high for operational and financial decision-making.</p>
-          <p><strong>Solution:</strong> Built a distributed ingestion and transformation architecture using AWS services, Python, Spark, Lambda, and event-driven publishing.</p>
+          <p><strong>Problem:</strong> Financial and operational data was fragmented across systems, slow to report on (up to 24 hours behind), and lacked the validation needed for reliable, real-time decision-making.</p>
+          <p><strong>Solution:</strong> Built an end-to-end AWS data platform spanning real-time ingestion, Spark-based processing and validation, curated data modeling, and standardized publishing APIs, delivering trusted data to dashboards and downstream consumers.</p>
           <ul class="job-list">
-            <li>Supported hundreds of incentive programs</li>
-            <li>Reduced latency from 24 hours to realtime</li>
-            <li>Improved scalability and data freshness</li>
-            <li>Created reusable metadata-driven ETL patterns</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <h3 class="project-title">Enterprise Investment Measurement Platform</h3>
-        <svg viewBox="0 0 630 100" class="arch-diagram" role="img" aria-label="Architecture: Source Systems to Curated Data Models to Validation to Analytics">
-          <defs>
-            <marker id="arrow2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-              <path d="M0,0 L8,4 L0,8 Z" fill="var(--accent)"/>
-            </marker>
-          </defs>
-          <g font-family="inherit" font-size="12" fill="var(--text)">
-            <rect x="10" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="75" y="46" text-anchor="middle">Source</text>
-            <text x="75" y="62" text-anchor="middle">Systems</text>
-
-            <line x1="140" y1="50" x2="168" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow2)"/>
-
-            <rect x="170" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="235" y="46" text-anchor="middle">Curated Data</text>
-            <text x="235" y="62" text-anchor="middle">Models</text>
-
-            <line x1="300" y1="50" x2="328" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow2)"/>
-
-            <rect x="330" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="395" y="46" text-anchor="middle">Validation &amp;</text>
-            <text x="395" y="62" text-anchor="middle">Observability</text>
-
-            <line x1="460" y1="50" x2="488" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow2)"/>
-
-            <rect x="490" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="555" y="46" text-anchor="middle">Analytics /</text>
-            <text x="555" y="62" text-anchor="middle">BI</text>
-          </g>
-        </svg>
-        <div class="project-body">
-          <p><strong>Problem:</strong> Business and leadership teams needed consistent measurement across fragmented operational systems.</p>
-          <p><strong>Solution:</strong> Designed curated data models, validation layers, observability, and delivery pipelines for analytics consumption.</p>
-          <ul class="job-list">
-            <li>Supported tens of thousands of opportunities</li>
-            <li>Enabled reporting across $100B+ in tracked business value</li>
-            <li>Reduced production and audit issues</li>
-            <li>Improved reliability of downstream reporting</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <h3 class="project-title">Data Publishing Platform for Finance Systems</h3>
-        <svg viewBox="0 0 630 100" class="arch-diagram" role="img" aria-label="Architecture: Internal Systems to Standardized Datasets to Publishing APIs to Downstream Consumers">
-          <defs>
-            <marker id="arrow3" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-              <path d="M0,0 L8,4 L0,8 Z" fill="var(--accent)"/>
-            </marker>
-          </defs>
-          <g font-family="inherit" font-size="12" fill="var(--text)">
-            <rect x="10" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="75" y="46" text-anchor="middle">Internal</text>
-            <text x="75" y="62" text-anchor="middle">Systems</text>
-
-            <line x1="140" y1="50" x2="168" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow3)"/>
-
-            <rect x="170" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="235" y="46" text-anchor="middle">Standardized</text>
-            <text x="235" y="62" text-anchor="middle">Datasets</text>
-
-            <line x1="300" y1="50" x2="328" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow3)"/>
-
-            <rect x="330" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="395" y="46" text-anchor="middle">Publishing</text>
-            <text x="395" y="62" text-anchor="middle">APIs</text>
-
-            <line x1="460" y1="50" x2="488" y2="50" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow3)"/>
-
-            <rect x="490" y="20" width="130" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
-            <text x="555" y="46" text-anchor="middle">Downstream</text>
-            <text x="555" y="62" text-anchor="middle">Consumers</text>
-          </g>
-        </svg>
-        <div class="project-body">
-          <p><strong>Problem:</strong> Critical finance datasets needed standardized, reliable publication to downstream services.</p>
-          <p><strong>Solution:</strong> Built and launched pipelines publishing contracts, invoices, payments, partner funding, customer insights, and investment data.</p>
-          <ul class="job-list">
-            <li>Six mission-critical datasets</li>
-            <li>Delivered ahead of schedule</li>
-            <li>Zero production issues at launch</li>
-            <li>Improved downstream API availability</li>
+            <li>Reduced reporting latency from 24 hours to realtime across hundreds of incentive programs</li>
+            <li>Enabled reporting and analytics across tens of thousands of business opportunities, representing $100B+ in tracked value</li>
+            <li>Delivered six mission-critical finance datasets (contracts, invoices, payments, and more) ahead of schedule with zero production issues</li>
+            <li>Reduced production and audit issues through validation, observability, and standardized schema contracts</li>
+            <li>Improved reliability of downstream reporting and API availability</li>
           </ul>
         </div>
       </div>
