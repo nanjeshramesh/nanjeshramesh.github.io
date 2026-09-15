@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
   <header class="nav">
@@ -192,12 +192,12 @@
               <path d="M0,0 L8,4 L0,8 Z" fill="#4caf7d"/>
             </marker>
             <marker id="arrow0-fail" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-              <path d="M0,0 L8,4 L0,8 Z" fill="#e06767"/>
+              <path d="M0,0 L8,4 L0,8 Z" fill="#d94f45"/>
             </marker>
           </defs>
           <g font-family="inherit" font-size="11.5" fill="var(--text)">
             <text x="700" y="11" text-anchor="middle" font-size="9.5" font-weight="700" letter-spacing="0.04em" fill="#4caf7d">PASS</text>
-            <text x="700" y="196" text-anchor="middle" font-size="9.5" font-weight="700" letter-spacing="0.04em" fill="#e06767">FAIL</text>
+            <text x="700" y="196" text-anchor="middle" font-size="9.5" font-weight="700" letter-spacing="0.04em" fill="#d94f45">FAIL</text>
 
             <rect x="10" y="67" width="110" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
             <text x="65" y="93" text-anchor="middle">Fragmented</text>
@@ -222,13 +222,13 @@
             <text x="525" y="109" text-anchor="middle">Checks</text>
 
             <line x1="580" y1="90" x2="623" y2="52" stroke="#4caf7d" stroke-width="2" marker-end="url(#arrow0-pass)"/>
-            <line x1="580" y1="104" x2="623" y2="142" stroke="#e06767" stroke-width="2" marker-end="url(#arrow0-fail)"/>
+            <line x1="580" y1="104" x2="623" y2="142" stroke="#d94f45" stroke-width="2" marker-end="url(#arrow0-fail)"/>
 
             <rect x="630" y="20" width="140" height="55" rx="8" fill="var(--bg-alt)" stroke="#4caf7d"/>
             <text x="700" y="44" text-anchor="middle">Queryable via</text>
             <text x="700" y="60" text-anchor="middle">DuckDB</text>
 
-            <rect x="630" y="120" width="140" height="55" rx="8" fill="var(--bg-alt)" stroke="#e06767"/>
+            <rect x="630" y="120" width="140" height="55" rx="8" fill="var(--bg-alt)" stroke="#d94f45"/>
             <text x="700" y="144" text-anchor="middle">Incident</text>
             <text x="700" y="160" text-anchor="middle">Runbook</text>
           </g>
@@ -255,41 +255,41 @@
               <path d="M0,0 L8,4 L0,8 Z" fill="var(--accent)"/>
             </marker>
             <marker id="arrow-batch" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-              <path d="M0,0 L8,4 L0,8 Z" fill="#ff9900"/>
+              <path d="M0,0 L8,4 L0,8 Z" fill="#ff6b4a"/>
             </marker>
           </defs>
           <g font-family="inherit" font-size="11.5" fill="var(--text)">
             <text x="325" y="11" text-anchor="middle" font-size="9.5" font-weight="700" letter-spacing="0.04em" fill="var(--accent)">REAL-TIME</text>
-            <text x="325" y="196" text-anchor="middle" font-size="9.5" font-weight="700" letter-spacing="0.04em" fill="#ff9900">BATCH</text>
+            <text x="325" y="196" text-anchor="middle" font-size="9.5" font-weight="700" letter-spacing="0.04em" fill="#ff6b4a">BATCH</text>
 
             <rect x="10" y="67" width="110" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
             <text x="65" y="93" text-anchor="middle">Fragmented</text>
             <text x="65" y="109" text-anchor="middle">Sources</text>
 
             <line x1="120" y1="90" x2="163" y2="52" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-main)"/>
-            <line x1="120" y1="104" x2="163" y2="142" stroke="#ff9900" stroke-width="2" marker-end="url(#arrow-batch)"/>
+            <line x1="120" y1="104" x2="163" y2="142" stroke="#ff6b4a" stroke-width="2" marker-end="url(#arrow-batch)"/>
 
             <rect x="170" y="20" width="140" height="55" rx="8" fill="var(--bg-alt)" stroke="var(--accent)"/>
             <text x="240" y="44" text-anchor="middle">Kinesis /</text>
             <text x="240" y="60" text-anchor="middle">Lambda Ingest</text>
 
-            <rect x="170" y="120" width="140" height="55" rx="8" fill="var(--bg-alt)" stroke="#ff9900"/>
+            <rect x="170" y="120" width="140" height="55" rx="8" fill="var(--bg-alt)" stroke="#ff6b4a"/>
             <text x="240" y="144" text-anchor="middle">Scheduled</text>
             <text x="240" y="160" text-anchor="middle">Batch Ingest</text>
 
             <line x1="310" y1="47.5" x2="343" y2="47.5" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-main)"/>
-            <line x1="310" y1="147.5" x2="343" y2="147.5" stroke="#ff9900" stroke-width="2" marker-end="url(#arrow-batch)"/>
+            <line x1="310" y1="147.5" x2="343" y2="147.5" stroke="#ff6b4a" stroke-width="2" marker-end="url(#arrow-batch)"/>
 
             <rect x="350" y="20" width="120" height="55" rx="8" fill="var(--bg-alt)" stroke="var(--accent)"/>
             <text x="410" y="44" text-anchor="middle">Spark</text>
             <text x="410" y="60" text-anchor="middle">Streaming</text>
 
-            <rect x="350" y="120" width="120" height="55" rx="8" fill="var(--bg-alt)" stroke="#ff9900"/>
+            <rect x="350" y="120" width="120" height="55" rx="8" fill="var(--bg-alt)" stroke="#ff6b4a"/>
             <text x="410" y="144" text-anchor="middle">Spark</text>
             <text x="410" y="160" text-anchor="middle">Batch ETL</text>
 
             <line x1="470" y1="47.5" x2="503" y2="85" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-main)"/>
-            <line x1="470" y1="147.5" x2="503" y2="109" stroke="#ff9900" stroke-width="2" marker-end="url(#arrow-batch)"/>
+            <line x1="470" y1="147.5" x2="503" y2="109" stroke="#ff6b4a" stroke-width="2" marker-end="url(#arrow-batch)"/>
 
             <rect x="510" y="67" width="140" height="60" rx="8" fill="var(--bg-alt)" stroke="var(--border)"/>
             <text x="580" y="93" text-anchor="middle">Redshift</text>
