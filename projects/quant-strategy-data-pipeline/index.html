@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quant Strategy Data Pipeline — Live Demo | Nanjesh Ramesh</title>
+<title>Quant Strategy Data Pipeline, Live Demo | Nanjesh Ramesh</title>
 <meta name="description" content="Interactive demo of a strategy analytics pipeline: schema standardization, partitioned Parquet lake, data quality checks, and a reproducible schema-drift incident.">
 <style>
   :root {
@@ -107,7 +107,7 @@
       <div class="demo-header">
         <div>
           <div class="demo-title">Pipeline output</div>
-          <div class="demo-note">Sample output from the checked-in demo dates — nothing is fetched live, this is the actual result of running the pipeline.</div>
+          <div class="demo-note">Sample output from the checked-in demo dates. Nothing is fetched live; this is the actual result of running the pipeline.</div>
         </div>
         <div class="toggle">
           <button id="btn-happy" class="active">Healthy run</button>
@@ -118,13 +118,13 @@
 
       <div id="alert" class="alert">
         <strong>SLO breach.</strong> <code>strategy_b</code> is missing from <code>strategy_pnl</code> for 2026-07-24.
-        Quarantine reason: missing expected column <code>ProfitLossUSD</code> — the source silently renamed it to <code>PnLUSD</code>.
+        Quarantine reason: missing expected column <code>ProfitLossUSD</code>. The source silently renamed it to <code>PnLUSD</code>.
         The other two strategies landed normally; see the runbook linked above for the full detection → fix timeline.
       </div>
 
       <div id="resolved-note" class="resolved-note">
         <strong>Fix verified.</strong> <code>parse_strategy_b</code> now accepts either <code>ProfitLossUSD</code> or <code>PnLUSD</code>.
-        The source still hasn't reverted the rename as of 2026-07-25 — and the pipeline handles it cleanly.
+        The source still hasn't reverted the rename as of 2026-07-25, and the pipeline handles it cleanly.
         Regression test: <code>test_previously_incident_causing_column_rename_now_handled</code>.
       </div>
 
@@ -157,8 +157,8 @@
     </div>
 
     <p class="footer-note">
-      Numbers above are pulled directly from <code>monitoring/reports/</code> and <code>data/lake/</code> in the repo —
-      run <code>make run DATE=2026-07-23</code>, <code>make incident DATE=2026-07-24</code>, or <code>make incident DATE=2026-07-25</code> yourself to reproduce them.
+      Numbers above are pulled directly from <code>monitoring/reports/</code> and <code>data/lake/</code> in the repo.
+      Run <code>make run DATE=2026-07-23</code>, <code>make incident DATE=2026-07-24</code>, or <code>make incident DATE=2026-07-25</code> yourself to reproduce them.
       Questions: <a href="mailto:nanjeshramesh7@gmail.com">nanjeshramesh7@gmail.com</a>
     </p>
   </div>
