@@ -354,6 +354,24 @@
           <h3 class="oss-title">fivetran/great_expectations</h3>
           <span class="oss-status oss-status--merged">Merged</span>
         </div>
+        <p class="oss-pr-title">Detect a real JOIN keyword in UnexpectedRowsExpectation instead of a substring</p>
+        <p class="oss-desc">
+          Fixed a bug where any query containing the letters "join", such as a status value
+          <code>'joined'</code> or a column named <code>join_date</code>, was treated as a real
+          <code>JOIN</code>, dropping a required subquery alias and breaking MySQL and SQL Server.
+          Replaced the substring test with token-aware detection that masks string literals, quoted
+          identifiers and comments. Maintainer review found that MySQL treats a backslash as an
+          escape while SQL Server does not, so the final version only counts a JOIN if it holds
+          under both readings, keeping the check backend agnostic.
+        </p>
+        <a href="https://github.com/fivetran/great_expectations/pull/12249" target="_blank" rel="noopener" class="oss-link">View PR #12249 →</a>
+      </div>
+
+      <div class="oss-card reveal">
+        <div class="oss-header">
+          <h3 class="oss-title">fivetran/great_expectations</h3>
+          <span class="oss-status oss-status--merged">Merged</span>
+        </div>
         <p class="oss-pr-title">Pass usedforsecurity=False on non-security md5 calls for FIPS hosts</p>
         <p class="oss-desc">
           Fixed a FIPS-compliance crash caused by unflagged MD5 usage across id generation,
